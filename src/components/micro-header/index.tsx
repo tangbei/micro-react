@@ -1,11 +1,21 @@
-import React, { FC } from 'react';
+/*
+ * @Author: itangbei@sina.com
+ * @Date: 2022-07-05 15:05:19
+ * @LastEditTime: 2022-07-13 08:36:45
+ * @Description: 
+ * Copyright (c) 2022 by itangbei@sina.com, All Rights Reserved. 
+ */
+import React, { FC, useEffect } from 'react';
 import { Layout, Space, Dropdown, Menu, Tag } from 'antd';
 import HeaderModule from '@/components/header/module';
-import { UserOutlined, MenuFoldOutlined } from '@ant-design/icons';
+import { UserOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { updateCollapse } from '@/redux/module/sider/action';
 
 import styles from './index.module.less';
+import { connect } from 'react-redux';
 
 const MircoHeader: React.FC = (props: any) => {
+  console.log('props', props);
   const menuItems = [
     {
       key: '1',
@@ -25,9 +35,22 @@ const MircoHeader: React.FC = (props: any) => {
     }
   ];
 
+  useEffect(() => {
+  }, []);
+
   return (
-    <Layout.Header className={styles.header} {...props}>
-      <MenuFoldOutlined style={{ fontSize: 20, padding: '0 10px' }} />
+    <Layout.Header className={styles.header}>
+      <div
+        style={{ fontSize: 20, padding: '0 10px' }}
+        onClick={() => {
+          console.log('aaaa');
+          debugger
+          props.updateCollapse(props.isCollapse);
+        }}
+      >
+        { props.isCollapse ? <MenuUnfoldOutlined /> : <MenuFoldOutlined /> }
+      </div>
+      
       <div className={styles.meta}>
         <div className={styles.meta_menu}>
           <HeaderModule />
@@ -48,4 +71,6 @@ const MircoHeader: React.FC = (props: any) => {
   );
 }
 
-export default MircoHeader;
+const mapStateToProps = (state: any) => ({ isCollapse: state.isCollapse });
+const mapDispatchToProps = { updateCollapse };
+export default connect(mapStateToProps, mapDispatchToProps)(MircoHeader);
