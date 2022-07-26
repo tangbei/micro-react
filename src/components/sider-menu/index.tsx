@@ -1,14 +1,16 @@
 /*
  * @Author: itangbei@sina.com
  * @Date: 2022-07-06 09:03:16
- * @LastEditTime: 2022-07-13 08:48:40
+ * @LastEditTime: 2022-07-19 13:49:15
  * @Description: 
  * Copyright (c) 2022 by itangbei@sina.com, All Rights Reserved. 
  */
-import React from "react";
+import React, { useEffect } from "react";
 import { PieChartOutlined, BankOutlined, AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import { Menu, MenuProps } from "antd";
+import { IRouteObject, rootRouter } from "@/routes";
 import styles from './index.module.less';
+import { useNavigate } from "react-router-dom";
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -33,8 +35,8 @@ type MenuItem = Required<MenuProps>['items'][number];
     getItem('Option 2', '2', <BankOutlined />),
     getItem('Option 3', '3', <SettingOutlined />),
   
-    getItem('Navigation One', 'sub1', <MailOutlined />, [
-      getItem('Option 5', '5'),
+    getItem('react学习', 'sub1', <MailOutlined />, [
+      getItem('HOC高阶组件', '5'),
       getItem('Option 6', '6'),
       getItem('Option 7', '7'),
       getItem('Option 8', '8'),
@@ -49,10 +51,30 @@ type MenuItem = Required<MenuProps>['items'][number];
   ];
 
 const SiderMenu: React.FC = (props: any) => {
+  const navigate = useNavigate();
+
+  const getMenuItems = (routes: IRouteObject[]) : MenuItem[] => {
+    const items: MenuItem[] = [];
+    routes.forEach(({ name, key, path, children = [] }: IRouteObject) => {
+      if (children.length > 0 && path !== '/') {
+        const childItems = getMenuItems(children);
+        items.push(getItem(name, key, <PieChartOutlined />, childItems));
+      } else {
+        items.push(getItem(name, key, <PieChartOutlined />));
+      }
+    });
+    return items;
+  };
 
   const onClick: MenuProps['onClick'] = e => {
     console.log('click ', e);
+    navigate(e.key);
   };
+
+  useEffect(() => {
+    console.log(getMenuItems(rootRouter[0].children));
+  }, []);
+
   return (
     <Menu
       onClick={onClick}
@@ -61,7 +83,7 @@ const SiderMenu: React.FC = (props: any) => {
       defaultOpenKeys={['sub1']}
       mode="inline"
       className={styles.menu}
-      items={items}
+      items={getMenuItems(rootRouter)}
     />
   );
 };

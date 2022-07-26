@@ -2,7 +2,7 @@
  * @Author: itangbei@sina.com
  * @Date: 2022-07-07 08:26:20
  * @LastEditors: Please set LastEditors
- * @LastEditTime: 2022-07-07 08:44:45
+ * @LastEditTime: 2022-07-13 09:43:06
  * @Description: 
  * Copyright (c) 2022 by itangbei@sina.com, All Rights Reserved. 
  */
@@ -54,6 +54,40 @@ module.exports = {
 		"no-use-before-define": "off", // 禁止在 函数/类/变量 定义之前使用它们
 		"prefer-const": "off", // 此规则旨在标记使用 let 关键字声明但在初始分配后从未重新分配的变量，要求使用 const
 		"no-irregular-whitespace": "off", // 禁止不规则的空白
+
+		'array-callback-return': 0,
+    complexity: 0,
+    'import/extensions': 0,
+    'import/no-dynamic-require': 0,
+    'import/no-mutable-exports': 0,
+    'import/no-unresolved': 0,
+    'max-statements-per-line': 0,
+    'no-bitwise': 0,
+    'no-nested-ternary': 0,
+    'no-return-assign': 0,
+    'no-shadow': 0,
+    'no-unreachable': 0,
+    'no-unused-expressions': ['error', {
+      allowShortCircuit: true,
+      allowTernary: true,
+    }],
+    'no-unused-vars': [2, {
+      args: 'none',
+      vars: 'all',
+    }],
+    'object-shorthand': [2, 'always'],
+    'prefer-const': [2, {
+      destructuring: 'all',
+      ignoreReadBeforeAssign: true,
+    }],
+    'prefer-rest-params': 0,
+    radix: 0,
+    'react-hooks/exhaustive-deps': 0,
+    'react/default-props-match-prop-types': 0,
+    'react/no-string-refs': 0,
+    'react/require-default-props': 0,
+    'sonarjs/no-collapsible-if': 0,
+    'sonarjs/no-extra-arguments': 0,
 
 		// typeScript (https://typescript-eslint.io/rules)
 		"@typescript-eslint/no-unused-vars": "error", // 禁止定义未使用的变量
